@@ -1,11 +1,23 @@
-<div class="ktme-container" ktme-draggable-element>
+<div class="ktme-container" ktme ktme-draggable-element>
 	<div ktme ktme-row>
-  		<input style="width: 20%; padding: 5px;" type="text" ktme-property placeholder="property" />
+  		<input style="width: 20%; padding: 5px;" type="text" ktme ktme-property placeholder="property" />
+  		<span ktme ktme-matchers-count>
+  			0
+  			<!-- <span class="alg" ktme>
+  				<span class="animate digit" id='digit1' ktme>1 2 3 4 5 6 7 8 9 0</span>
+			</span>
+			<span class="alg" ktme>
+  				<span class="animate digit" id='digit2' ktme>1 2 3 4 5 6 7 8 9 0</span>
+			</span>
+			<span class="alg" ktme>
+  				<span class="animate digit" id='digit3' ktme>1 2 3 4 5 6 7 8 9 0</span>
+			</span> -->
+		</span>
   		<button ktme ktme-add-property> add </button>
   	</div>
   
   	<div ktme ktme-row>
-  		<input style="width: 90%; padding: 5px;" type="text" ktme-url/>
+  		<input style="width: 90%; padding: 5px;" type="text" ktme ktme-url/>
   	</div>
 
   	<div ktme>
@@ -38,7 +50,8 @@
 				</li>
   			</ul>
   		</fieldset>
-  		<button ktme-set-collection ktme>Save Collection</button>
+  		<button ktme ktme-set-collection>Save Collection</button>
+  		<button ktme ktme-highlight-collection>Hightlight Collection</button>
 	</div>
 	<div class="ktme-options" ktme>
 		<div class="span options" ktme>
@@ -50,9 +63,12 @@
 			<span ktme> Sair </span>
   		</div>
   	</div>
+	<div ktme>
+		<textarea name="selector" ktme></textarea>
+	</div>
 </div>
 
- <style type="text/css">
+ <style type="text/css" ktme>
 
 	*[hover-inspect] {
 	  cursor: default !important;
@@ -69,6 +85,19 @@
 	  cursor: default !important;
 	  background-color: yellow !important;
 	  box-shadow: 0 5px 15px rgba(145, 92, 182, .4) !important;
+	}
+
+	*[ktme-matchers-count] {
+      border: 1px solid;
+	  padding: 5px;
+      padding-left: 4px;
+      padding-top: 7px;
+      border-radius: 50px;
+      background-color: #e77600;
+      color: #fff;
+      display: inline-block;
+      width: 36px;
+      text-align: center;
 	}
 
 	.ktme-container {
@@ -109,7 +138,7 @@
 	  display: block !important;
 	}
 	   
-	.options {
+	.ktme-match-options {
 	  z-index: 999 !important;
 	  margin-left:5px !important;
 	}
@@ -120,6 +149,7 @@
 	  height:16px !important;
 	  display: inline-block !important;
 	  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA+UlEQVQ4T6WTsW7CMBCG/3MmFugTIOUsZewCj1BWBC/AwHOx9gHaCbWvUAbEFsUXde8AI4uNnCaRQYEExYtlWf/3351/E3ou6qnH0wBmHgMYicjBmz8FYOYpEX0DGDrnViLy3hkQiF/KtnfGmGknwK3YWnuOomieZdlXDdBaT6y1f3me/4aDbRIrpRbGmG09A2ZeE9EGwMk5NxORH3/ZJq4BWus9gNfS+eghxeX/wIqefdmhc1Vl0QIzvxHRJ4BBBSn3h+KrZ4zjeKaU+gggBeOe81UF1eEW0iZuDFIA8e0tq2nfi3xjDpIkYS9I01Ta/kqnID2C9AZcAOU9cBF5pN6fAAAAAElFTkSuQmCC') no-repeat !important;
+	  cursor: pointer;
 	}
 
 	.exclude {
@@ -128,5 +158,73 @@
 	  height:16px !important;
 	  display: inline-block !important;
 	  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABZUlEQVQ4T6WTv0vDUBDHL0ElMQ7NWsjUbIEsEXRQKC2iUH+BqH9kWysuOvgjCiIOXQIdHxRSOpYsMRc1nLySxJcmDtJs713uc3ff7z0JlvykJfOhALAsawMRdwzDuHdd91uEW5a1hohtTdNePM8Ls1gOSJOfAGATAG4URTkfjUaf/Mc0+QoAOkT0joit6XT6wWM5oNFoHADArVB1DuFnRJwnC7EWY4wX+wU0m80V3/f7AHAsQohIkiTpSLgbMMY4OCkAhFa7CxBRikGtVrscDodfJQ2yi3TeKkgpudRB1kUURb2FtoGIrnVdvxCrV44Qx3GfiA6r9qMKItrIfV5Ue5CKeCoKaxjGWbYnOcA0zX0iuhPV5oLx82w268qyfCLE2oyxx8II9Xp9XVXVBwDYBoCCYI7jrAZB0EvdeY3jeG8ymUQlDWzb1sIw3GKMPWc+Z1XTPdlNkuRtPB7jnzb+93Et/Rp/AIOvqxGqyMNZAAAAAElFTkSuQmCC') no-repeat !important;
+	  cursor: pointer;
+	}
+
+	.alg {
+	  width: 1em;
+	  height: 1em;
+	  overflow: hidden;
+	  line-height: 1em;
+	  display: inline-block;
+	  margin: -6px;
+	}
+	
+	span {
+	  position: relative;
+	}
+	
+	.animate {
+      -webkit-animation: spinit 0.25s 10;
+      -moz-animation: spinit 0.25s 10;
+	  animation: spinit 0.25s 10;
+	}
+	
+	@-webkit-keyframes spinit {
+	  0% {
+	    top: 0em;
+	  }
+	  50% {
+	    top: -5em;
+	  }
+	  100% {
+	    top: -9em;
+	  }
+	}
+	@-moz-keyframes spinit {
+	  0% {
+	    top: 0em;
+	  }
+	  50% {
+	    top: -5em;
+	  }
+	  100% {
+	    top: -9em;
+	  }
+	}
+	
+	@keyframes spinit {
+	  0% {
+	    top: 0em;
+	  }
+	  50% {
+	    top: -5em;
+	  }
+	  100% {
+	    top: -9em;
+	  }
+	}
+
+	/* Setting the required value to top will make the spinner end at that number */
+
+	#digit1 {
+	  top: -9em;
+	  /* -4em means 5 will be the number */
+	}
+	#digit2 {
+	  top: -9em;
+	}
+	#digit3 {
+	  top: -9em;
 	}
 </style>
