@@ -1,43 +1,58 @@
-// colletion struct
-// collection = { 
-//   matchers: [
-//   {
-//     selector: '', 
-//     type: ''}
-//   ] 
-// };
-
-var collection = { matchers: [] };
-
-// next page
-// find a in element and get url
-// if url == '#'
-// get element target
-
 (function () {
-  
+    
   _loadTemplate();
+  
+  // colletion struct
+  // collection = { 
+  //   matchers: [
+  //   {
+  //     selector: '', 
+  //     type: ''}
+  //   ] 
+  // };
+
+  var collection = { matchers: [] };
 
   // store all dom elements inside the body
   var allElements = _querySelectorAll('body *');
   
-  // highlight hover selection
-  allElements.forEach(function($el_node) {
-    // avoid select any element inside extension window
-    if ($el_node.className.match('ktme-container') || $el_node.getAttribute('ktme') != null) return;
-    $el_node.addEventListener("mouseover", mouseOverHandle);
-    $el_node.addEventListener("mouseout", mouseOutHandle);
-  });
-
+  
   // close extension window
   document.querySelector('.ktme-exit-extension span').addEventListener("click", function() {
+    console.info('EXIT EXTENSION CLICK');
     _querySelectorAll('[ktme]').forEach(function($ktme) {
       $ktme.remove();
     });
   });
 
+  document.querySelector('[ktme-inspect]').addEventListener("click", inspectElement);
+
+  function inspectElement() {
+    $el = this;
+    if ($el.getAttribute('inspect')) {
+      console.info('EXIT INSPECT ELEMENT CLICK');
+      $el.style.border = '1px solid';
+      $el.removeAttribute('inspect');
+      // @toFIX
+      return removeClickHandle() && removeHoverHandle();
+    }
+    console.info('INSPECT ELEMENT CLICK');
+    $el.style.border = '2px solid #0074db';
+    $el.setAttribute('inspect', true);
+    //    border: 2px solid #0074db;
+    // highlight hover selection
+    allElements.forEach(function($el_node) {
+      // avoid select any element inside extension window
+      if ($el_node.className.match('ktme-container') || $el_node.getAttribute('ktme') != null) return;
+      $el_node.addEventListener("mouseover", mouseOverHandle);
+      $el_node.addEventListener("mouseout", mouseOutHandle);
+    });
+
+  }
+
   function mouseOverHandle(ev) {
     $el = this;
+    console.info('ELEMENT MOUSEOVER');
     
     ev.stopPropagation();
     
@@ -54,12 +69,14 @@ var collection = { matchers: [] };
 
   function mouseOutHandle(ev) {
     $el = this;
+    console.info('ELEMENT MOUSEOUT');
     $el.removeAttribute('hover-inspect');
   }
   
   function clickHandle(ev) {
 
     var $el = this;
+    console.info('CLICKHANDLE ELEMENT CLICK');
     $el.setAttribute('highlighted-inspect', true);
     
     // set current url to collection url
@@ -111,7 +128,7 @@ var collection = { matchers: [] };
     var similars, selector, similars_type;
 
     var highlightSimilar = function() {
-
+      console.info('HIGHLIGHT SIMILAR');
       similars_type = document.querySelector('[name=similars]:checked').value;
 
       allElements.forEach(removeMatchAttribute);
@@ -172,9 +189,9 @@ var collection = { matchers: [] };
     _querySelectorAll('[name=similars]').forEach(function(el) {
       el.addEventListener('change', highlightSimilar);
     });
-
     
     document.querySelector('[ktme-set-collection]').addEventListener("click", function() {
+      console.info('SET COLLECTION CLICK');
       console.log(collection);
 
     });
@@ -182,6 +199,7 @@ var collection = { matchers: [] };
     // highlight collection
     document.querySelector('[ktme-highlight-collection]').addEventListener("click", function() {
       
+      console.info('HIGHLIGHT COLLECTION');
       var highlightElement = function(el) {
         if (el.getAttribute('similar-inspect') || el.getAttribute('highlighted-inspect')) return;
         el.setAttribute('similar-inspect', 'class');
@@ -199,6 +217,7 @@ var collection = { matchers: [] };
       
       $el.addEventListener("click", function(ev) {
         
+        console.info('MATCH OPTION SELECT CLICK');
         ev.stopPropagation();
         ev.preventDefault();
         
@@ -227,6 +246,7 @@ var collection = { matchers: [] };
 
     _querySelectorAll('.ktme-match-options .exclude').forEach(function($el) {
       $el.addEventListener("click", function(ev) {
+        console.info('MATCH OPTION EXCLUDE CLICK');
         ev.stopPropagation();
         ev.preventDefault();
         _querySelectorAll('[similar-inspect= '+ $el.getAttribute("ktme-parent-type")+']').forEach(removeMatchAttribute);
@@ -237,16 +257,28 @@ var collection = { matchers: [] };
   }
 
   function removeMatchAttribute(el) {
+    console.info('REMOVE MATCH ATTRIBUTE');
     el.removeAttribute('similar-inspect');
     if (el.querySelector('.ktme-match-options')) el.querySelector('.ktme-match-options').remove();
   }
 
   // remove previous attached click event
   function removeClickHandle() {
+    console.info('REMOVE CLICK HANDLE');
     for (var i=0; i < allElements.length; i++) {
       allElements[i].removeAttribute('hover-inspect');
       allElements[i].removeAttribute('highlighted-inspect');
     }
+  }
+
+  function removeHoverHandle() {
+    console.info('REMOVE HOVER HANDLE');
+    allElements.forEach(function($el_node) {
+      // avoid select any element inside extension window
+      if ($el_node.className.match('ktme-container') || $el_node.getAttribute('ktme') != null) return;
+        $el_node.removeEventListener("mouseover");
+        $el_node.removeEventListener("mouseout");
+    });
   }
 
   
@@ -341,7 +373,6 @@ var collection = { matchers: [] };
     // Bind the functions...
     document.querySelector('[ktme-draggable-element]').onmousedown = function () {
       _drag_init(this);
-      return false;
     };
 
     document.onmousemove = _move_elem;
@@ -372,7 +403,6 @@ var collection = { matchers: [] };
   }
 
   function _animateCounter(number) {
-    
 
     number = number.toString().split('');
     
@@ -401,7 +431,6 @@ var collection = { matchers: [] };
     });
   }
 
- 
 })();
 
 Array.prototype.equals = function(testArr) {

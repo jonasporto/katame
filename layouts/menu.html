@@ -1,74 +1,5 @@
-<div class="ktme-container" ktme ktme-draggable-element>
-	<div ktme ktme-row>
-  		<input style="width: 20%; padding: 5px;" type="text" ktme ktme-property placeholder="property" />
-  		<span ktme ktme-matchers-count>
-  			0
-  			<!-- <span class="alg" ktme>
-  				<span class="animate digit" id='digit1' ktme>1 2 3 4 5 6 7 8 9 0</span>
-			</span>
-			<span class="alg" ktme>
-  				<span class="animate digit" id='digit2' ktme>1 2 3 4 5 6 7 8 9 0</span>
-			</span>
-			<span class="alg" ktme>
-  				<span class="animate digit" id='digit3' ktme>1 2 3 4 5 6 7 8 9 0</span>
-			</span> -->
-		</span>
-  		<button ktme ktme-add-property> add </button>
-  	</div>
-  
-  	<div ktme ktme-row>
-  		<input style="width: 90%; padding: 5px;" type="text" ktme ktme-url/>
-  	</div>
-
-  	<div ktme>
-  		<fieldset class="radiogroup" ktme>
-  			<legend ktme>Similars</legend>
-  			<ul class="radio" ktme>
-  				<li ktme>
-  					<input type="radio" name="similars" id="class-target" value="class" ktme/>
-				    <label for="class-target" ktme>
-				    	<span ktme-count-by-class ktme>0</span> - Class
-				    </label>
-  				</li>
-				<li ktme>
-					<input type="radio" name="similars" id="id-target" value="id" ktme />
-					<label for="id-target" ktme>
-						<span ktme-count-by-id ktme>0</span> - ID
-					</label>
-				</li>
-				<li ktme>
-					<input type="radio" name="similars" id="text-target" value="text" ktme/>
-					<label for="text-target" ktme>
-						<span ktme-count-by-text ktme>0</span> - Text
-					</label>
-				</li>
-				<li ktme>
-					<input type="radio" name="similars" id="position-target" value="position" checked ktme/>
-					<label for="position-target" ktme>
-						<span ktme-count-by-position ktme>0</span> - Position
-					</label>
-				</li>
-  			</ul>
-  		</fieldset>
-  		<button ktme ktme-set-collection>Save Collection</button>
-  		<button ktme ktme-highlight-collection>Hightlight Collection</button>
-	</div>
-	<div class="ktme-options" ktme>
-		<div class="span options" ktme>
-			<input type="radio" name="element" value="one" checked ktme>One<br>
-  			<input type="radio" name="element" value="all" ktme>All<br>
-  		</div>
-
-		<div class="ktme-exit-extension" ktme>
-			<span ktme> Sair </span>
-  		</div>
-  	</div>
-	<div ktme>
-		<textarea name="selector" ktme></textarea>
-	</div>
-</div>
-
- <style type="text/css" ktme>
+<div>
+<style type="text/css" ktme scoped>
 
 	*[hover-inspect] {
 	  cursor: default !important;
@@ -161,6 +92,23 @@
 	  cursor: pointer;
 	}
 
+	.inspect {
+		border: 1px solid;
+    	padding: 12px;
+    	margin: 10px;
+    	float: left;
+		background-size: 16px !important;
+	  	width:22px !important;
+	  	height:26px !important;
+	  	display: inline-block !important;
+		background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAWCAIAAABR6hviAAAAA3NCSVQICAjb4U/gAAAAGXRFWHRTb2Z0d2FyZQBnbm9tZS1zY3JlZW5zaG907wO/PgAAAQBJREFUOI3llD2OgzAQhSfRQkflabjAXGBOgGihouIMiJvQUXEIJCTcuvYBOIF7qOgQRQoUtNrYAUXRKlJeZXtmPr3x32WeZ3ifrm9kfRvu53Gp6zql1LIs1gLP86IoyrLsLE4pVdf1EwtFUbhwlmZdvnat6+oKfcBRNE3jCln27o+qqkJEIiIiRHyefIxDRK211hoAhBB0lxV93CwR7eNpmrTWbdsaY1509xsHAMyc53kQBNbkY3eIKITYp2EYulh2nO/7VoPMnCSJlLLvexfO0mwcx2VZbpd5uxNENAzD3qOUEgDSNH2svZz5PsdxNMYw8zbd3L2OO68PeGT/h7sB785TxHunHM0AAAAASUVORK5CYII=') no-repeat !important;
+		cursor: pointer;
+	}
+
+	.inspect:hover{
+		border: 2px solid #949494;
+	}
+
 	.alg {
 	  width: 1em;
 	  height: 1em;
@@ -228,3 +176,75 @@
 	  top: -9em;
 	}
 </style>
+<div class="ktme-container" ktme ktme-draggable-element>
+
+	<div ktme ktme-row>
+		<span class="inspect" ktme ktme-inspect></span>
+  		<input style="width: 20%; padding: 5px;" type="text" placeholder="property" />
+  		<span ktme ktme-matchers-count>
+  			0
+  			<!-- <span class="alg" ktme>
+  				<span class="animate digit" id='digit1' ktme>1 2 3 4 5 6 7 8 9 0</span>
+			</span>
+			<span class="alg" ktme>
+  				<span class="animate digit" id='digit2' ktme>1 2 3 4 5 6 7 8 9 0</span>
+			</span>
+			<span class="alg" ktme>
+  				<span class="animate digit" id='digit3' ktme>1 2 3 4 5 6 7 8 9 0</span>
+			</span> -->
+		</span>
+  		<button ktme ktme-add-property> add </button>
+  	</div>
+  
+  	<div ktme ktme-row>
+  		<input style="width: 90%; padding: 5px;" type="text" ktme ktme-url/>
+  	</div>
+
+  	<div ktme>
+  		<fieldset class="radiogroup" ktme>
+  			<legend ktme>Similars</legend>
+  			<ul class="radio" ktme>
+  				<li ktme>
+  					<input type="radio" name="similars" id="class-target" value="class" ktme/>
+				    <label for="class-target" ktme>
+				    	<span ktme-count-by-class ktme>0</span> - Class
+				    </label>
+  				</li>
+				<li ktme>
+					<input type="radio" name="similars" id="id-target" value="id" ktme />
+					<label for="id-target" ktme>
+						<span ktme-count-by-id ktme>0</span> - ID
+					</label>
+				</li>
+				<li ktme>
+					<input type="radio" name="similars" id="text-target" value="text" ktme/>
+					<label for="text-target" ktme>
+						<span ktme-count-by-text ktme>0</span> - Text
+					</label>
+				</li>
+				<li ktme>
+					<input type="radio" name="similars" id="position-target" value="position" checked ktme/>
+					<label for="position-target" ktme>
+						<span ktme-count-by-position ktme>0</span> - Position
+					</label>
+				</li>
+  			</ul>
+  		</fieldset>
+  		<button ktme ktme-set-collection>Save Collection</button>
+  		<button ktme ktme-highlight-collection>Hightlight Collection</button>
+	</div>
+	<div class="ktme-options" ktme>
+		<div class="span options" ktme>
+			<input type="radio" name="element" value="one" checked ktme>One<br>
+  			<input type="radio" name="element" value="all" ktme>All<br>
+  		</div>
+
+		<div class="ktme-exit-extension" ktme>
+			<span ktme> Sair </span>
+  		</div>
+  	</div>
+	<div ktme>
+		<textarea name="selector" ktme></textarea>
+	</div>
+</div>
+</div>
