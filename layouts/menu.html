@@ -1,4 +1,4 @@
-<div>
+<div ktme>
 <style type="text/css" ktme scoped>
 
 	*[hover-inspect] {
@@ -29,6 +29,10 @@
       display: inline-block;
       width: 36px;
       text-align: center;
+	}
+
+	*[ktme-matchers-count="0"] {
+		background-color: #efdb0e;
 	}
 
 	.ktme-container {
@@ -180,20 +184,14 @@
 
 	<div ktme ktme-row>
 		<span class="inspect" ktme ktme-inspect></span>
-  		<input style="width: 20%; padding: 5px;" type="text" placeholder="property" />
-  		<span ktme ktme-matchers-count>
-  			0
-  			<!-- <span class="alg" ktme>
-  				<span class="animate digit" id='digit1' ktme>1 2 3 4 5 6 7 8 9 0</span>
-			</span>
-			<span class="alg" ktme>
-  				<span class="animate digit" id='digit2' ktme>1 2 3 4 5 6 7 8 9 0</span>
-			</span>
-			<span class="alg" ktme>
-  				<span class="animate digit" id='digit3' ktme>1 2 3 4 5 6 7 8 9 0</span>
-			</span> -->
+  		<input style="width: 20%; padding: 5px;" type="text" placeholder="property" ktme ktme-property/>
+  		<span ktme ktme-matchers-container>
+	  		<span ktme ktme-matchers-count="0" ktme-collection-id="1">
+	  			0
+	  		</span>
 		</span>
   		<button ktme ktme-add-property> add </button>
+  		<button ktme ktme-clear-property> clear </button>
   	</div>
   
   	<div ktme ktme-row>
@@ -234,17 +232,9 @@
   		<button ktme ktme-highlight-collection>Hightlight Collection</button>
 	</div>
 	<div class="ktme-options" ktme>
-		<div class="span options" ktme>
-			<input type="radio" name="element" value="one" checked ktme>One<br>
-  			<input type="radio" name="element" value="all" ktme>All<br>
-  		</div>
-
 		<div class="ktme-exit-extension" ktme>
 			<span ktme> Sair </span>
   		</div>
   	</div>
-	<div ktme>
-		<textarea name="selector" ktme></textarea>
-	</div>
 </div>
 </div>

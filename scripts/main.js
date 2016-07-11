@@ -11,21 +11,46 @@
   //   ] 
   // };
 
-  var collection = { matchers: [] };
+  var collections = [];
+  var collection = { id: 1, matchers: [] };
 
   // store all dom elements inside the body
-  var allElements = _querySelectorAll('body *');
+  var allElements = [];
+   _querySelectorAll('body *').forEach(function($el) {
+    if ($el.className.match('ktme-container') || $el.getAttribute('ktme') != null) return;
+    allElements.push($el);
+  });
   
   
   // close extension window
-  document.querySelector('.ktme-exit-extension span').addEventListener("click", function() {
+  document.querySelector('.ktme-exit-extension span').addEventListener("click", function(ev) {
     console.info('EXIT EXTENSION CLICK');
     _querySelectorAll('[ktme]').forEach(function($ktme) {
       $ktme.remove();
     });
   });
 
+  document.querySelector('[ktme-add-property]').addEventListener('click', function(ev) {
+    collection.column = document.querySelector('[ktme-property]').value;
+    if (collections.indexOf(collection) == -1) collections.push(collection);
+    $el = document.querySelector('[ktme-collection-id="' + collection.id + '"]');
+    $el.setAttribute('title', collection.column);
+    
+    collection = { 
+      id: collection.id + 1,
+      matchers: [] 
+    };
+
+    var matchers_container = document.querySelector('[ktme-matchers-container]');
+    matchers_container.innerHTML = '<span ktme ktme-matchers-count=\"'+0+'\" ktme-collection-id=\"'+collection.id+'\">' + 0 + ' </span>' + matchers_container.innerHTML;
+    
+    _clearProperty();
+  });
+
+  document.querySelector('[ktme-clear-property]').addEventListener('click', _clearProperty);
+
   document.querySelector('[ktme-inspect]').addEventListener("click", inspectElement);
+
 
   function inspectElement() {
     $el = this;
@@ -43,11 +68,19 @@
     // highlight hover selection
     allElements.forEach(function($el_node) {
       // avoid select any element inside extension window
-      if ($el_node.className.match('ktme-container') || $el_node.getAttribute('ktme') != null) return;
+      if ($el_node.className.match('ktme-container') || $el_node.getAttribute('ktme') != null) {
+        return;
+      }
       $el_node.addEventListener("mouseover", mouseOverHandle);
       $el_node.addEventListener("mouseout", mouseOutHandle);
     });
 
+  }
+
+  function _clearProperty(ev) {
+    
+    document.querySelector('[ktme-property]').value = '';
+    //document.querySelector('[ktme-matchers-count]').innerHTML = '0';
   }
 
   function mouseOverHandle(ev) {
@@ -186,13 +219,13 @@
 
     highlightSimilar();
     
-    _querySelectorAll('[name=similars]').forEach(function(el) {
-      el.addEventListener('change', highlightSimilar);
-    });
+    // _querySelectorAll('[name=similars]').forEach(function(el) {
+    //   el.addEventListener('change', highlightSimilar);
+    // });
     
     document.querySelector('[ktme-set-collection]').addEventListener("click", function() {
       console.info('SET COLLECTION CLICK');
-      console.log(collection);
+      console.log(collections);
 
     });
 
@@ -200,16 +233,21 @@
     document.querySelector('[ktme-highlight-collection]').addEventListener("click", function() {
       
       console.info('HIGHLIGHT COLLECTION');
-      var highlightElement = function(el) {
+      var highlightElement = function(el, matcher) {
         if (el.getAttribute('similar-inspect') || el.getAttribute('highlighted-inspect')) return;
-        el.setAttribute('similar-inspect', 'class');
+        el.setAttribute('similar-inspect', matcher.type);
+        el.innerHTML += '<span class=\"ktme-match-options\">  <span class=\"exclude\" ktme-parent-type=\"'+el.getAttribute('similar-inspect')+'\"></span> <span class=\"select\" ktme-parent-type=\"'+el.getAttribute('similar-inspect')+'\" ktme-data-selector=\"'+matcher.selector+'\"></span></span>';
       }
 
       collection.matchers.forEach(function(matcher) {
         if (matcher.type == 'text') {
-          return _queryTextAll(matcher.selector).forEach(highlightElement)
+          return _queryTextAll(matcher.selector).forEach(function(el) {
+            highlightElement(el, matcher)
+          });
         }
-        return _querySelectorAll(matcher.selector).forEach(highlightElement)
+        return _querySelectorAll(matcher.selector).forEach(function(el) {
+          highlightElement(el, matcher)
+        });
       });
     });
 
@@ -239,7 +277,17 @@
           }
           return counter_matchers += _querySelectorAll(match.selector).length;
         });
-        document.querySelector('[ktme-matchers-count]').innerHTML = counter_matchers;
+        
+        var matchers_count = document.querySelectorAll('[ktme-matchers-count]');
+        var matchers_container = document.querySelector('[ktme-matchers-container]');
+        if (parseInt(matchers_count[0].getAttribute('ktme-collection-id')) == collection.id) {
+          matchers_count[0].setAttribute('ktme-matchers-count', counter_matchers);
+          matchers_count[0].setAttribute('ktme-collection-id', collection.id);
+          matchers_count[0].innerHTML = counter_matchers;
+        } else {
+          matchers_container.innerHTML = '<span ktme ktme-matchers-count=\"'+counter_matchers+'\" ktme-collection-id=\"'+collection.id+'\">' + counter_matchers + ' </span>' + matchers_container.innerHTML;
+        }
+
         //_animateCounter(counter_matchers);
       });
     });
